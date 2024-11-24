@@ -28,6 +28,15 @@ Tutorial Starting Project in Laravel 11 use Breeze
 
 - Configuration
 
+// .env
+
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=projectstarter
+    DB_USERNAME=root
+    DB_PASSWORD=********
+
 - Migrate
 
 // migration/0001_01_01_000000_create_users_table.php
@@ -55,7 +64,7 @@ Tutorial Starting Project in Laravel 11 use Breeze
 	protected $guarded = [];
 
 
-php artisan migrate
+    php artisan migrate
 
 --------------------------------------------------------------
 
@@ -63,7 +72,7 @@ php artisan migrate
 
 - Seeders
 
-php artisan make:seeder UsersTableSeeder
+    php artisan make:seeder UsersTableSeeder
 
     public function run(): void
     {
