@@ -3,20 +3,22 @@ Tutorial Starting Project in Laravel 11 use Breeze
 ## 1. Create Project
 
 - create Project
-composer create-project laravel/laravel lara11-startproject
+
+    composer create-project laravel/laravel lara11-startproject
 
 - Install Breeze
-composer require laravel/breeze --dev
 
-php artisan breeze:install
+    composer require laravel/breeze --dev
 
-blade
+    php artisan breeze:install
 
-no
+    blade
 
-1
+    no
 
-php artisan serve
+    1
+
+    php artisan serve
 
 ------------------------------------------------------------
 
@@ -30,23 +32,23 @@ php artisan serve
 
 // migration/0001_01_01_000000_create_users_table.php
 
-{
-	Schema::create('users', function (Blueprint $table){
-		$table->id();
-		$table->string('name')->nullable();
-		$table->string('username')->nullable();
-		$table->string('email')->nullable();
-		$table->timestamp('email_verified_at')->nullable();
-		$table->string('password')->nullable();
-		$table->string('photo')->nullable();
-		$table->string('phone')->nullable();
-		$table->text('address')->nullable();
-		$table->enum('role',['superadmin','admin','user'])->default('user');
-		$table->enum('status',['active','inactive'])->default('active');
-		$table->rememberToken();
-		$table->timestamp();
-	});
-}
+    {
+        Schema::create('users', function (Blueprint $table){
+            $table->id();
+            $table->string('name')->nullable();
+            $table->string('username')->nullable();
+            $table->string('email')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password')->nullable();
+            $table->string('photo')->nullable();
+            $table->string('phone')->nullable();
+            $table->text('address')->nullable();
+            $table->enum('role',['superadmin','admin','user'])->default('user');
+            $table->enum('status',['active','inactive'])->default('active');
+            $table->rememberToken();
+            $table->timestamp();
+        });
+    }
 
 // Models/User.php
 
@@ -63,67 +65,67 @@ php artisan migrate
 
 php artisan make:seeder UsersTableSeeder
 
-public function run(): void
-{
-	DB:table('users')->insert([
-	// superadmin
-		[
-			'name' => 'Super Admin',
-			'username' => 'superadmin',
-			'email' => 'superadmin@mahdev.com',
-			'password' => Hash::make ('qwerty123'),
-			'role' => 'superadmin',
-			'status' => 'active',
-		],
-	// admin
-		[
-			'name' => 'Admin',
-			'username' => 'admin',
-			'email' => 'admin@mahdev.com',
-			'password' => Hash::make ('qwerty123'),
-			'role' => 'admin',
-			'status' => 'active',
-		],
-	// user
-		[
-			'name' => 'User',
-			'username' => 'user',
-			'email' => 'user@mahdev.com',
-			'password' => Hash::make ('qwerty123'),
-			'role' => 'user',
-			'status' => 'active',
-		]
-	]);
-}
+    public function run(): void
+    {
+        DB:table('users')->insert([
+        // superadmin
+            [
+                'name' => 'Super Admin',
+                'username' => 'superadmin',
+                'email' => 'superadmin@mahdev.com',
+                'password' => Hash::make ('qwerty123'),
+                'role' => 'superadmin',
+                'status' => 'active',
+            ],
+        // admin
+            [
+                'name' => 'Admin',
+                'username' => 'admin',
+                'email' => 'admin@mahdev.com',
+                'password' => Hash::make ('qwerty123'),
+                'role' => 'admin',
+                'status' => 'active',
+            ],
+        // user
+            [
+                'name' => 'User',
+                'username' => 'user',
+                'email' => 'user@mahdev.com',
+                'password' => Hash::make ('qwerty123'),
+                'role' => 'user',
+                'status' => 'active',
+            ]
+        ]);
+    }
 
 - Factories
 
 // factories/UserFactory.php
 
-public function definition(): array
-{
-	return[
-	    'name' => fake()-name(),
-	    'email' => fake()-unique()->safeEmail(),
-	    'email_verified_at' => now(),
-	    'password' => static::$password ??= Hash::make('qwerty123'),
-	    'phonr' => fake()->phoneNumber,
-	    'address' => fake()->address(),
-	    'photo' => fake()->imageUrl('60','60'),
-	    'role' => fake()->randomElement(['superadmin','admin','user']),
-	    'status' => fake()->randomElement(['active','inactive']),
-	    'remember_token' => Str::random(10),
-	];
-}
+    public function definition(): array
+    {
+        return[
+            'name' => fake()-name(),
+            'email' => fake()-unique()->safeEmail(),
+            'email_verified_at' => now(),
+            'password' => static::$password ??= Hash::make('qwerty123'),
+            'phonr' => fake()->phoneNumber,
+            'address' => fake()->address(),
+            'photo' => fake()->imageUrl('60','60'),
+            'role' => fake()->randomElement(['superadmin','admin','user']),
+            'status' => fake()->randomElement(['active','inactive']),
+            'remember_token' => Str::random(10),
+        ];
+    }
 
 
 // seeders/DatabaseSeeder.php
 
-public function run(): void
-{
-	$this->call(UsersTableSeeder::class);
-	User::factory(10)->create();
-}
+    public function run(): void
+    {
+        $this->call(UsersTableSeeder::class);
+        User::factory(10)->create();
+    }
 
 php artisan migrate
 php artisan migrate:fresh --seed
@@ -137,16 +139,16 @@ php artisan make:controller SuperAdminController
 
 //Controller/SuperAdminController.php
 
-public function SuperAdminController(Request, $request)
-{
-	return view ('sadmin.dashboard');
-}
+    public function SuperAdminController(Request, $request)
+    {
+        return view ('sadmin.dashboard');
+    }
 
 //routes/web.php
 
-require __DIR__.'/auth.php';
+    require __DIR__.'/auth.php';
 
-Route::get('sadmin/dashboard',[SuperAdminController::class,'SuperAdminDashboard'])->name('sadmin.dashboard');
+    Route::get('sadmin/dashboard',[SuperAdminController::class,'SuperAdminDashboard'])->name('sadmin.dashboard');
 
 create folder at sadmin/dashboard.blade.php
 //views/sadmin/dashboard.blade.php
@@ -156,13 +158,13 @@ php artisan make:controller AdminController
 
 //Controller/AdminController.php
 
-public function AdminController(Request, $request)
-{
-	return view ('admin.dashboard');
-}
+    public function AdminController(Request, $request)
+    {
+        return view ('admin.dashboard');
+    }
 
 //routes/web.php
-Route::get('admin/dashboard',[AdminController::class,'AdminDashboard'])->name('admin.dashboard');
+    Route::get('admin/dashboard',[AdminController::class,'AdminDashboard'])->name('admin.dashboard');
 
 create folder at admin/dashboard.blade.php
 //views/admin/dashboard.blade.php
@@ -174,65 +176,65 @@ php artisan make:controller UserController
 - Multi Login System
 //Controllers/Auth/AuthenticatedSessionController.php
 
-public function store(LoginRequest $request): RedirectResponse
-{
-	$request->authenticate();
-	$request->session()->regenerate();
+    public function store(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+        $request->session()->regenerate();
 
-	if($reques->user()->role == 'superadmin')
-	{
-		return redirect()->intended('sadmin/dashboard');
-	}elseif($reques->user()->role == 'admin')
-	{
-		return redirect()->intended('admin/dashboard');
-	}elseif($reques->user()->role == 'user')
-	{
-		return redirect()->intended(route('dashboard', absolute: false));
-	}
-}
+        if($reques->user()->role == 'superadmin')
+        {
+            return redirect()->intended('sadmin/dashboard');
+        }elseif($reques->user()->role == 'admin')
+        {
+            return redirect()->intended('admin/dashboard');
+        }elseif($reques->user()->role == 'user')
+        {
+            return redirect()->intended(route('dashboard', absolute: false));
+        }
+    }
 
 
-#Role
+- Role
 //Middleware/Role.php
 
 
 use App\Http\Middleware\Role;
 
-public function handle(Request $request, Closure $next, $role): Response
-{
-	if($request->user()->role !== $role){
-		return redirect('dashboard');
-	}
-	return $next($request);
-}
+    public function handle(Request $request, Closure $next, $role): Response
+    {
+        if($request->user()->role !== $role){
+            return redirect('dashboard');
+        }
+        return $next($request);
+    }
 
 
 //bootstrap/app.php
-->withMiddleware(function (Middleware $middleware)
-	$middleware->alias([
-		'role' => Role::class
-	]);
-})
+    ->withMiddleware(function (Middleware $middleware)
+        $middleware->alias([
+            'role' => Role::class
+        ]);
+    })
 
 
 //routes/web.php
 
-require __DIR__.'/auth.php';
+    require __DIR__.'/auth.php';
 
-Route::middleware(['auth', 'role:superadmin'])->group(function(){
-	Route::get('sadmin/dashboard',[SuperAdminController::class,'SuperAdminDashboard'])->name('sadmin.dashboard');
-});
+    Route::middleware(['auth', 'role:superadmin'])->group(function(){
+        Route::get('sadmin/dashboard',[SuperAdminController::class,'SuperAdminDashboard'])->name('sadmin.dashboard');
+    });
 
-Route::middleware(['auth', 'role:admin'])->group(function(){
-	Route::get('admin/dashboard',[AdminController::class,'AdminDashboard'])->name('admin.dashboard');
-});
+    Route::middleware(['auth', 'role:admin'])->group(function(){
+        Route::get('admin/dashboard',[AdminController::class,'AdminDashboard'])->name('admin.dashboard');
+    });
 
 ------------------------------------------------------------------
 
 ## 5. Login with Name, Email and Phone
 
 
-## 6. 
+## 6. Admin Template Setup
 
 
 ------------------------------------------------------------------
