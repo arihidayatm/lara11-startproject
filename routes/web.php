@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SuperAdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,3 +20,13 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Route::get('sadmin/dashboard',[SuperAdminController::class,'SuperAdminDashboard'])->name('sadmin.dashboard');
+Route::middleware(['auth', 'role:superadmin'])->group(function(){
+    Route::get('sadmin/dashboard',[SuperAdminController::class,'SuperAdminDashboard'])->name('sadmin.dashboard');
+});
+
+// Route::get('admin/dashboard',[AdminController::class,'AdminDashboard'])->name('admin.dashboard');
+Route::middleware(['auth', 'role:admin'])->group(function(){
+    Route::get('admin/dashboard',[AdminController::class,'AdminDashboard'])->name('admin.dashboard');
+});

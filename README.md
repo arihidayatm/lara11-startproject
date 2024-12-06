@@ -190,13 +190,13 @@ php artisan make:controller UserController
         $request->authenticate();
         $request->session()->regenerate();
 
-        if($reques->user()->role == 'superadmin')
+        if($request->user()->role == 'superadmin')
         {
             return redirect()->intended('sadmin/dashboard');
-        }elseif($reques->user()->role == 'admin')
+        }elseif($request->user()->role == 'admin')
         {
             return redirect()->intended('admin/dashboard');
-        }elseif($reques->user()->role == 'user')
+        }elseif($request->user()->role == 'user')
         {
             return redirect()->intended(route('dashboard', absolute: false));
         }
@@ -219,11 +219,23 @@ use App\Http\Middleware\Role;
 
 
 //bootstrap/app.php
-    ->withMiddleware(function (Middleware $middleware)
+
+use App\Http\Middleware\Role;
+
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'role' => Role::class
         ]);
     })
+    ->withExceptions(function (Exceptions $exceptions) {
+        //
+    })->create();
 
 
 //routes/web.php
