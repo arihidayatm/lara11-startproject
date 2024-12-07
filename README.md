@@ -148,7 +148,7 @@ php artisan make:controller SuperAdminController
 
 //Controller/SuperAdminController.php
 
-    public function SuperAdminController(Request, $request)
+    public function SuperAdminDashboard(Request, $request)
     {
         return view ('sadmin.dashboard');
     }
@@ -167,7 +167,7 @@ php artisan make:controller AdminController
 
 //Controller/AdminController.php
 
-    public function AdminController(Request, $request)
+    public function AdminDashboard(Request, $request)
     {
         return view ('admin.dashboard');
     }
