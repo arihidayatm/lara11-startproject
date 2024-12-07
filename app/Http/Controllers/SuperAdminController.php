@@ -8,6 +8,6 @@ class SuperAdminController extends Controller
 {
     public function SuperAdminDashboard(Request $request)
     {
-        return view ('sadmin.dashboard');
+        return view ('sadmin.index');
     }
 }

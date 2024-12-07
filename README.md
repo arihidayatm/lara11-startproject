@@ -110,7 +110,7 @@ Tutorial Starting Project in Laravel 11 use Breeze
 - Factories
 
 // factories/UserFactory.php
-
+``
     public function definition(): array
     {
         return[
@@ -126,7 +126,7 @@ Tutorial Starting Project in Laravel 11 use Breeze
             'remember_token' => Str::random(10),
         ];
     }
-
+``
 
 // seeders/DatabaseSeeder.php
 
@@ -256,6 +256,11 @@ return Application::configure(basePath: dirname(__DIR__))
 
 
 ## 6. Admin Template Setup
+
+If you use Admin Template Setup, 
+-NobleUI - HTML Bootstrap 5 Admin Dashboard Template
+
+download or clone this Branch :
 
 
 ------------------------------------------------------------------
