@@ -266,8 +266,9 @@ If you want Admin Template Setup,
 
 - NobleUI - HTML Bootstrap 5 Admin Dashboard Template
 
-download or clone this Branch :
+download or clone this Branch : 
 
+[Admin-Template-Setup](https://github.com/arihidayatm/lara11-startproject/tree/Admin-Template-Setup)
 
 ------------------------------------------------------------------
 ## Contributing
