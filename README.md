@@ -4,21 +4,21 @@ Tutorial Starting Project in Laravel 11 use Breeze
 
 - create Project
 
-    composer create-project laravel/laravel lara11-startproject
+``composer create-project laravel/laravel lara11-startproject``
 
 - Install Breeze
 
-    composer require laravel/breeze --dev
+``composer require laravel/breeze --dev``
 
-    php artisan breeze:install
+``php artisan breeze:install``
 
-    blade
+    ``blade``
 
-    no
+    ``no``
 
-    1
+    ``1``
 
-    php artisan serve
+``php artisan serve``
 
 ------------------------------------------------------------
 
@@ -64,7 +64,7 @@ Tutorial Starting Project in Laravel 11 use Breeze
 	protected $guarded = [];
 
 
-    php artisan migrate
+``php artisan migrate``
 
 --------------------------------------------------------------
 
@@ -72,21 +72,21 @@ Tutorial Starting Project in Laravel 11 use Breeze
 
 - Seeders
 
-    php artisan make:seeder UsersTableSeeder
+``php artisan make:seeder UsersTableSeeder``
 
     public function run(): void
     {
         DB::table('users')->insert([
-        // superadmin
-            [
-                'name' => 'Super Admin',
-                'username' => 'superadmin',
-                'email' => 'superadmin@mahdev.com',
-                'password' => Hash::make ('qwerty123'),
-                'role' => 'superadmin',
-                'status' => 'active',
-            ],
-        // admin
+        //superadmin
+          [
+              'name' => 'Super Admin',
+              'username' => 'superadmin',
+              'email' => 'superadmin@mahdev.com',
+              'password' => Hash::make ('qwerty123'),
+              'role' => 'superadmin',
+              'status' => 'active',
+        ],
+        //admin
             [
                 'name' => 'Admin',
                 'username' => 'admin',
@@ -95,7 +95,7 @@ Tutorial Starting Project in Laravel 11 use Breeze
                 'role' => 'admin',
                 'status' => 'active',
             ],
-        // user
+        //user
             [
                 'name' => 'User',
                 'username' => 'user',
@@ -110,7 +110,7 @@ Tutorial Starting Project in Laravel 11 use Breeze
 - Factories
 
 // factories/UserFactory.php
-``
+
     public function definition(): array
     {
         return[
@@ -126,7 +126,7 @@ Tutorial Starting Project in Laravel 11 use Breeze
             'remember_token' => Str::random(10),
         ];
     }
-``
+
 
 // seeders/DatabaseSeeder.php
 
@@ -136,15 +136,16 @@ Tutorial Starting Project in Laravel 11 use Breeze
         User::factory(10)->create();
     }
 
-php artisan migrate
-php artisan migrate:fresh --seed
+``php artisan migrate``
+
+``php artisan migrate:fresh --seed``
 
 --------------------------------------------------------------
 
 ## 4. Super Admin, Admin and User Multi Login System
 (Multi Auth with Breeze Login Auth for Super Admin, Admin and User)
 
-php artisan make:controller SuperAdminController
+``php artisan make:controller SuperAdminController``
 
 //Controller/SuperAdminController.php
 
@@ -160,10 +161,10 @@ php artisan make:controller SuperAdminController
     Route::get('sadmin/dashboard',[SuperAdminController::class,'SuperAdminDashboard'])->name('sadmin.dashboard');
 
 create folder at sadmin/dashboard.blade.php
+
 //views/sadmin/dashboard.blade.php
 
-
-php artisan make:controller AdminController
+``php artisan make:controller AdminController``
 
 //Controller/AdminController.php
 
@@ -173,16 +174,17 @@ php artisan make:controller AdminController
     }
 
 //routes/web.php
+
     Route::get('admin/dashboard',[AdminController::class,'AdminDashboard'])->name('admin.dashboard');
 
 create folder at admin/dashboard.blade.php
+
 //views/admin/dashboard.blade.php
 
-
-php artisan make:controller UserController
-
+``php artisan make:controller UserController``
 
 - Multi Login System
+
 //Controllers/Auth/AuthenticatedSessionController.php
 
     public function store(LoginRequest $request): RedirectResponse
@@ -204,10 +206,11 @@ php artisan make:controller UserController
 
 
 - Role
+
 //Middleware/Role.php
 
 
-use App\Http\Middleware\Role;
+    use App\Http\Middleware\Role;
 
     public function handle(Request $request, Closure $next, $role): Response
     {
@@ -220,25 +223,27 @@ use App\Http\Middleware\Role;
 
 //bootstrap/app.php
 
-use App\Http\Middleware\Role;
 
-return Application::configure(basePath: dirname(__DIR__))
-    ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
-        health: '/up',
-    )
-    ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
-            'role' => Role::class
-        ]);
-    })
-    ->withExceptions(function (Exceptions $exceptions) {
-        //
-    })->create();
+    use App\Http\Middleware\Role;
+    
+    return Application::configure(basePath: dirname(__DIR__))
+        ->withRouting(
+            web: __DIR__.'/../routes/web.php',
+            commands: __DIR__.'/../routes/console.php',
+            health: '/up',
+        )
+        ->withMiddleware(function (Middleware $middleware) {
+            $middleware->alias([
+                'role' => Role::class
+            ]);
+        })
+        ->withExceptions(function (Exceptions $exceptions) {
+            //
+        })->create();
 
 
 //routes/web.php
+
 
     require __DIR__.'/auth.php';
 
@@ -257,8 +262,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
 ## 6. Admin Template Setup
 
-If you use Admin Template Setup, 
--NobleUI - HTML Bootstrap 5 Admin Dashboard Template
+If you want Admin Template Setup,
+
+- NobleUI - HTML Bootstrap 5 Admin Dashboard Template
 
 download or clone this Branch :
 
