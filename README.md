@@ -259,6 +259,55 @@ create folder at admin/dashboard.blade.php
 
 ## 5. Login with Name, Email and Phone
 
+//resources/views/auth/login.blade.php
+
+
+    {{-- Use login with Email/Name/Phone --}}
+    <div>
+        <x-input-label for="login" :value="__('Email')" />
+        <x-text-input id="login" class="block mt-1 w-full" type="text" name="login" :value="old('login')" required autofocus autocomplete="username" />
+        <x-input-error :messages="$errors->get('login')" class="mt-2" />
+    </div>
+
+//Http/Requests/Auth/LoginRequest.php
+
+
+    use App\Models\User;
+
+    public function rules(): array
+    {
+        return [
+            'login' => ['required', 'string'],
+            'password' => ['required', 'string'],
+        ];
+    }
+
+    public function authenticate(): void
+    {
+        $this->ensureIsNotRateLimited();
+
+        $user = User::where('email', $this->login)
+                    ->orWhere('name', $this->login)
+                    ->orWhere('phone', $this->login)
+                    ->first();
+
+        if (!$user || !Hash::check($this->password, $user->password))
+        {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
+        }
+
+        Auth::login($user, $this->boolean('remember'));
+        RateLimiter::clear($this->throttleKey());
+    }
+
+If you want login use login with Email/Name/Phone.
+
+Download or clone this Branc :
+[Login-Email-Name-Phone](https://github.com/arihidayatm/lara11-startproject/tree/Login-Email-Name-Phone)
 
 ## 6. Admin Template Setup
 
@@ -266,8 +315,9 @@ If you want Admin Template Setup,
 
 - NobleUI - HTML Bootstrap 5 Admin Dashboard Template
 
-download or clone this Branch :
+download or clone this Branch : 
 
+[Admin-Template-Setup](https://github.com/arihidayatm/lara11-startproject/tree/Admin-Template-Setup)
 
 ------------------------------------------------------------------
 ## Contributing
