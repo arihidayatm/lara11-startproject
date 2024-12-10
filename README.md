@@ -320,7 +320,7 @@ download or clone this Branch :
 [Admin-Template-Setup](https://github.com/arihidayatm/lara11-startproject/tree/Admin-Template-Setup)
 
 ------------------------------------------------------------------
-## 7. Dashboard Page Segmentation
+## 6.1 Dashboard Page Segmentation
 
 If you want Dashboard Page Segmentation in SuperAdmin and Admin,
 create folder _body at resources/views/sadmin/_body
@@ -378,6 +378,36 @@ insert this code:
 
 
 ------------------------------------------------------------------
+
+## 6.2 SuperAdmin Logout Option
+
+//resources/views/sadmin/_body/navbar.blade.php
+navbar.blade.php
+
+    <li class="dropdown-item py-2">
+        <a href="{{ route('sadmin.logout') }}" class="text-body ms-0">
+            <i class="me-2 icon-md" data-feather="log-out"></i>
+            <span>Log Out</span>
+        </a>
+    </li>
+
+//app/Http/Controllers/SuperAdminController.php
+SuperAdminController.php
+
+    public function SuperAdminLogout(Request $request)
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
+    }
+
+//routes/web.php
+web.php
+
+    Route::get('sadmin/logout',[SuperAdminController::class,'SuperAdminLogout'])->name('sadmin.logout');
 
 ## Contributing
 

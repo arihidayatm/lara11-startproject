@@ -24,6 +24,7 @@ require __DIR__.'/auth.php';
 // Route::get('sadmin/dashboard',[SuperAdminController::class,'SuperAdminDashboard'])->name('sadmin.dashboard');
 Route::middleware(['auth', 'role:superadmin'])->group(function(){
     Route::get('sadmin/dashboard',[SuperAdminController::class,'SuperAdminDashboard'])->name('sadmin.dashboard');
+    Route::get('sadmin/logout',[SuperAdminController::class,'SuperAdminLogout'])->name('sadmin.logout');
 });
 
 // Route::get('admin/dashboard',[AdminController::class,'AdminDashboard'])->name('admin.dashboard');
