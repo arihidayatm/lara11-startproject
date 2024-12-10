@@ -259,7 +259,57 @@ create folder at admin/dashboard.blade.php
 
 ## 5. Login with Name, Email and Phone
 
+//resources/views/auth/login.blade.php
 
+
+    {{-- Use login with Email/Name/Phone --}}
+    <div>
+        <x-input-label for="login" :value="__('Email')" />
+        <x-text-input id="login" class="block mt-1 w-full" type="text" name="login" :value="old('login')" required autofocus autocomplete="username" />
+        <x-input-error :messages="$errors->get('login')" class="mt-2" />
+    </div>
+
+//Http/Requests/Auth/LoginRequest.php
+
+
+    use App\Models\User;
+
+    public function rules(): array
+    {
+        return [
+            'login' => ['required', 'string'],
+            'password' => ['required', 'string'],
+        ];
+    }
+
+    public function authenticate(): void
+    {
+        $this->ensureIsNotRateLimited();
+
+        $user = User::where('email', $this->login)
+                    ->orWhere('name', $this->login)
+                    ->orWhere('phone', $this->login)
+                    ->first();
+
+        if (!$user || !Hash::check($this->password, $user->password))
+        {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
+        }
+
+        Auth::login($user, $this->boolean('remember'));
+        RateLimiter::clear($this->throttleKey());
+    }
+
+If you want login use login with Email/Name/Phone.
+
+Download or clone this Branc :
+[Login-with-Email-Name-Phone](https://github.com/arihidayatm/lara11-startproject/tree/Login-with-Name-and-Phone)
+
+------------------------------------------------------------------
 ## 6. Admin Template Setup
 
 If you want Admin Template Setup,
@@ -267,9 +317,68 @@ If you want Admin Template Setup,
 - NobleUI - HTML Bootstrap 5 Admin Dashboard Template
 
 download or clone this Branch :
+[Admin-Template-Setup](https://github.com/arihidayatm/lara11-startproject/tree/Admin-Template-Setup)
+
+------------------------------------------------------------------
+## 7. Dashboard Page Segmentation
+
+If you want Dashboard Page Segmentation in SuperAdmin and Admin,
+create folder _body at resources/views/sadmin/_body
+and create file blade.php at _body for segmentation page
+--sidebar.blade.php
+--navbar.blade.php
+--footer.blade.php
+
+and <body> in dashboard.blade.php at sadmin folder or admin folder
+insert this code:
+
+    <body>
+        <div class="main-wrapper">
+
+            <!-- partial:partials/_sidebar.html -->
+            @include('sadmin._body.sidebar')
+            <!-- partial -->
+
+            <div class="page-wrapper">
+
+                <!-- partial:partials/_navbar.html -->
+                @include('sadmin._body.navbar')
+                <!-- partial -->
+                
+                <!-- content -->
+                @yield('sadmin')
+                <!-- content -->
+
+                <!-- partial:partials/_footer.html -->
+                @include('sadmin._body.footer')
+                <!-- partial -->
+            
+            </div>
+        </div>
+
+        <!-- core:js -->
+        <script src="{{ asset('assets/vendors/core/core.js') }}"></script>
+        <!-- endinject -->
+
+        <!-- Plugin js for this page -->
+        <script src="{{ asset('assets/vendors/flatpickr/flatpickr.min.js') }}"></script>
+        <script src="{{ asset('assets/vendors/apexcharts/apexcharts.min.js') }}"></script>
+        <!-- End plugin js for this page -->
+
+        <!-- inject:js -->
+        <script src="{{ asset('assets/vendors/feather-icons/feather.min.js') }}"></script>
+        <script src="{{ asset('assets/js/template.js') }}"></script>
+        <!-- endinject -->
+
+        <!-- Custom js for this page -->
+        <script src="{{ asset('assets/js/dashboard-dark.js') }}"></script>
+        <!-- End custom js for this page -->
+
+    </body>
 
 
 ------------------------------------------------------------------
+
 ## Contributing
 
 The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs).
