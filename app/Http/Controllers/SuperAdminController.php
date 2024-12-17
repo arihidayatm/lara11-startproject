@@ -19,6 +19,11 @@ class SuperAdminController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/sadmin/login');
+    }
+
+    public function SuperAdminLogin(Request $request)
+    {
+        return view ('sadmin.sadmin-login');
     }
 }

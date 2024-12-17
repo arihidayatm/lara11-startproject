@@ -1,7 +1,7 @@
 <nav class="sidebar">
     <div class="sidebar-header">
         <a href="{{ route('sadmin.dashboard') }}" class="sidebar-brand">
-            MAH<span>UI</span>
+            MAH<span>Dev</span>
         </a>
         <div class="sidebar-toggler not-active">
             <span></span>
@@ -319,6 +319,7 @@
     </div>
 </nav>
 
+{{-- Dark Theme or light --}}
 <nav class="settings-sidebar">
     <div class="sidebar-body">
         <a href="#" class="settings-sidebar-toggler">
@@ -326,11 +327,11 @@
         </a>
         <div class="theme-wrapper">
         <h6 class="text-muted mb-2">Light Theme:</h6>
-            <a class="theme-item" href="../demo1/dashboard.html">
+            <a class="theme-item" href="#">
                 <img src="../assets/images/screenshots/light.jpg" alt="light theme">
             </a>
         <h6 class="text-muted mb-2">Dark Theme:</h6>
-            <a class="theme-item active" href="../demo2/dashboard.html">
+            <a class="theme-item active" href="#">
                 <img src="../assets/images/screenshots/dark.jpg" alt="Dark theme">
             </a>
         </div>

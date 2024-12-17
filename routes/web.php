@@ -31,3 +31,6 @@ Route::middleware(['auth', 'role:superadmin'])->group(function(){
 Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('admin/dashboard',[AdminController::class,'AdminDashboard'])->name('admin.dashboard');
 });
+
+//Super Admin Login
+Route::get('sadmin/login',[SuperAdminController::class,'SuperAdminLogin'])->name('sadmin.login');
